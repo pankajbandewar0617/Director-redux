@@ -1,0 +1,67 @@
+.nav-links {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 28px;
+}
+.all-movies,
+.all-directors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+p {
+  margin-block-start: 2px;
+  margin-block-end: 2px;
+}
+div {
+  padding: 10px;
+}
+.director-add,
+.movie-add {
+  border: 4px solid;
+  width: 400px;
+  font-size: 16px;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(58, 57, 57);
+  color: rgba(179, 166, 166, 0.767);
+  border-radius: 25px;
+  line-height: 20px;
+}
+h2 {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+body {
+  background-color: #252c38;
+  color: rgb(252, 240, 240);
+}
+.movies,
+.directors {
+  width: 200px;
+  height: 100px;
+  color: white;
+  font-size: larger;
+  background-color: #252c38;
+  border: none;
+}
+.movies:hover,
+.directors:hover {
+  background-color: rgb(14, 109, 96);
+  color: darkgoldenrod;
+}
+button:hover {
+  cursor: pointer;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+.back-button {
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  font-size: 25px;
+  border: none;
+}
