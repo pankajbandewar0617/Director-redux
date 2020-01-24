@@ -4,6 +4,7 @@ import Directors from './Director';
 import AddDirector from './addDirector';
 import DirectorEdit from './editDirector';
 import Directorname from './directorName';
+import DirectorDelete from './deleteDirector';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 
@@ -18,7 +19,7 @@ function App() {
           <Route path="/directors/new" exact component={AddDirector} />
           <Route path="/directors/:id" exact component={Directorname} />
           <Route path="/directors/:id/edit" exact component={DirectorEdit} />
-          {/* <Route path="/directors/:id/delete" exact component={DirectorDelete} /> */}
+          <Route path="/directors/:id/delete" exact component={DirectorDelete} />
         </Switch>
       </BrowserRouter>
     </div>

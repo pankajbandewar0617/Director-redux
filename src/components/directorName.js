@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Switch, Route, withRouter } from 'react-router-dom';
-import { deletedata, getAllData } from './action'
-import { connect } from 'react-redux';
+
 import SingleDirector from './singleDirector';
-import DirectorEdit from './editDirector';
 
 
 class Directorname extends Component {
@@ -22,17 +20,18 @@ class Directorname extends Component {
         }
     }
 
-    ondelete = (e) => {
-        // console.log('delete');
-        const id = e.target.parentNode.getAttribute('position')
-        this.props.deletedata(id)
-        // await this.props.getAllData()
-        this.props.refresh()
-        // console.log(this.props.refresh)
-        // this.props.history.push('./directors')
-    }
+    // ondelete = (e) => {
+    //     // console.log('delete');
+    //     const id = e.target.parentNode.getAttribute('position')
+    //     this.props.deletedata(id)
+    //     // await this.props.getAllData()
+    //     this.props.refresh()
+    //     // console.log(this.props.refresh)
+    //     // this.props.history.push('./directors')
+    // }
 
     render() {
+        console.log(this.props.data)
         return (
             <div className="directorname" position={this.props.name.id} style={this.directorstyle()}>
                 <Link to={`/directors/${this.props.name.id}`}>
@@ -45,22 +44,13 @@ class Directorname extends Component {
                 <Link to={`/directors/${this.props.name.id}/edit`}>
                     <button>edit directors</button>
                 </Link>
-
-                <button onClick={this.ondelete}>delete</button>
+                <Link to={`/directors/${this.props.name.id}/delete`}>
+                    <button>delete</button>
+                </Link>
             </div >
         );
     }
 }
 
 
-const mapStateToProps = (state) => {
-    // console.log(state.data)
-    return {
-        data: state.data
-    };
-}
-const mapDispatchToProps = {
-    deletedata, getAllData
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Directorname);
+export default Directorname;

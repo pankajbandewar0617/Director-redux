@@ -54,6 +54,7 @@ function* actionWatcher3() {
 
 function* addDirector(data) {
     console.log('add director')
+    console.log(data)
     const url = 'http://localhost:9000/directors'
     const json = yield fetch(url, {
         method: 'POST',
@@ -70,7 +71,7 @@ function* addDirector(data) {
     });
 
     // yield console.log(json)
-    yield put({ type: "ADD DATA", json })
+    // yield put({ type: "ADD DATA", json })
 
 }
 
