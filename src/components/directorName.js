@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route, withRouter } from 'react-router-dom';
+import { deletedata } from './action'
+import { connect } from 'react-redux';
+import SingleDirector from './singleDirector';
+import DirectorEdit from './editDirector';
+
 
 class Directorname extends Component {
 
@@ -17,16 +22,44 @@ class Directorname extends Component {
         }
     }
 
+    ondelete = (e) => {
+        console.log('delete');
+        const id = e.target.parentNode.getAttribute('position')
+        this.props.deletedata(id)
+        this.props.refresh()
+        // console.log(this.props.refresh)
+        // this.props.history.push('./directors')
+    }
+
     render() {
         return (
             <div className="directorname" position={this.props.name.id} style={this.directorstyle()}>
                 <Link to={`/directors/${this.props.name.id}`}>
                     <p><b>Id : </b>{this.props.name.id}</p>
                 </Link>
+                <Switch>
+                    <Route path={`/directors/${this.props.name.id}`} component={() => (<SingleDirector id={this.props.name.id} />)} />
+                </Switch>
                 <p><b>Director : </b>{this.props.name.name}</p>
+                <Link to="/directors/edit">
+                    <button>edit directors</button>
+                </Link>
+
+                <button onClick={this.ondelete}>delete</button>
             </div >
         );
     }
 }
 
-export default Directorname;
+
+const mapStateToProps = (state) => {
+    // console.log(state.data)
+    return {
+        data: state.data
+    };
+}
+const mapDispatchToProps = {
+    deletedata
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Directorname);

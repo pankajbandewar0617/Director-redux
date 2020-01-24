@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import '../../App.css'
+import { Link, Switch, Route } from 'react-router-dom';
+import { connect } from "react-redux";
+import './App.css';
+import { getOneData } from './action';
 
-class DirectorDetail extends Component {
 
-    state = {
-        director: []
-    };
+class SingleDirector extends Component {
 
     componentDidMount() {
-        this.getDirector();
+        console.log(this.props)
+        const id = this.props.id;
+        console.log(id);
+        this.props.getOneData(id)
     }
 
-    getDirector() {
-        const getDirectorById = `http://localhost:9000${this.props.match.url}`;
-        fetch(getDirectorById, {
-            method: 'GET'
-        })
-            .then(data => data.json())
-            .then(name => this.setState({ director: name }));
-    }
+    // getDirector() {
+    //     const getDirectorById = `http://localhost:9000${this.props.match.url}`;
+    //     fetch(getDirectorById, {
+    //         method: 'GET'
+    //     })
+    //         .then(data => data.json())
+    //         .then(name => this.setState({ director: name }));
+    // }
 
     directorStyle = () => {
         return {
@@ -58,6 +60,7 @@ class DirectorDetail extends Component {
     };
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <div>
@@ -66,22 +69,22 @@ class DirectorDetail extends Component {
                     </Link>
                 </div>
                 <div style={this.directorStyle()}>
-                    <p>
+                    {/* <p>
                         <b>Id : </b>
                         {this.state.director.id}
                     </p>
                     <p>
                         <b>Director : </b>
                         {this.state.director.name}
-                    </p>
+                    </p> */}
                     <div>
-                        <Link to={`/directors/${this.state.director.id}/edit`}>
-                            <button style={this.editStyle()}>edit</button>
-                        </Link>
+                        {/* <Link to={`/directors/${this.state.director.id}/edit`}> */}
+                        <button style={this.editStyle()}>edit</button>
+                        {/* </Link> */}
 
-                        <Link to={`/directors/${this.state.director.id}/delete`}>
-                            <button style={this.deleteStyle()}>delete</button>
-                        </Link>
+                        {/* <Link to={`/directors/${this.state.director.id}/delete`}> */}
+                        <button style={this.deleteStyle()}>delete</button>
+                        {/* </Link> */}
                     </div>
                 </div>
             </div>
@@ -89,4 +92,17 @@ class DirectorDetail extends Component {
     }
 }
 
-export default DirectorDetail;
+
+// const mapStateToProps = (state) => {
+//     console.log(state)
+//     return {
+//         directorName: state.directorName
+//     };
+// }
+const mapDispatchToProps = {
+    getOneData
+};
+
+export default connect(null, mapDispatchToProps)(SingleDirector);
+
+// export default SingleDirector;

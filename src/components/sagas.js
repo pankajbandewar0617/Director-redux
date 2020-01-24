@@ -1,25 +1,95 @@
-import { put, takeLatest, all } from 'redux-saga/effects';
+import { put, takeLatest, all, fork } from 'redux-saga/effects';
 
-function* fetchData() {
+function* getAllDirector() {
     const url = 'http://localhost:9000/directors'
     const json = yield fetch(url, {
         method: 'GET'
     }).then(response => {
         return response.json()
     });
-
     // console.log(json)
     yield put({ type: "DATA_RECEIVED", json });
 }
 
-function* actionWatcher() {
-    // console.log(8788)
-    yield takeLatest("GET_DATA", fetchData)
+function* actionWatcher1() {
+    console.log('get all director')
+    yield takeLatest("GET_DATA", getAllDirector)
 }
+
+
+function* deleteDirector(data) {
+    console.log(data.id)
+
+    const url = `http://localhost:9000/directors/${data.id}/delete`
+    const json = yield fetch(url, {
+        method: 'DELETE'
+    })
+
+    yield put({ type: "DATA_DELETED" });
+
+}
+
+function* actionWatcher2() {
+    console.log('delete director')
+    yield takeLatest("DELETE", deleteDirector)
+}
+
+
+function* getOneDirector(data) {
+
+    const url = `http://localhost:9000/directors/${data.id}`
+    const json = yield fetch(url, {
+        method: 'GET'
+    }).then(response => {
+        return response.json()
+    });
+    // console.log(json)
+    yield put({ type: "ONE_DATA", json })
+}
+
+function* actionWatcher3() {
+    console.log('get one director')
+    yield takeLatest("GET_ONE", getOneDirector)
+}
+
+function* addDirector(data) {
+    console.log('add director')
+    const url = 'http://localhost:9000/directors'
+    const json = yield fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }).then(res => {
+        return res.json()
+    }
+    ).catch(err => {
+        console.log(err);
+    });
+
+    yield put({ type: "ADD DATA", json })
+
+}
+
+function* actionWatcher4() {
+    console.log('add director')
+    yield takeLatest("ADD_ONE", addDirector)
+}
+
+// function* actionWatcher5() {
+//     console.log('edit director')
+//     yield takeLatest("EDIT_ONE", editData)
+// }
 
 export default function* rootSaga() {
     // console.log(434)
     yield all([
-        actionWatcher(),
+        fork(actionWatcher1),
+        fork(actionWatcher2),
+        fork(actionWatcher3),
+        fork(actionWatcher4),
+
     ]);
 }

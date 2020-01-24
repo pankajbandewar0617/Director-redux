@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Directorname from './directorName';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import { connect } from "react-redux";
-import { getData } from './action';
+import { getAllData } from './action';
+// import AddDirector from './addDirector';
 import './App.css';
 
-class Director extends Component {
+class Directors extends Component {
 
     componentDidMount() {
-        this.props.getData();
+        this.props.getAllData();
     }
 
     addstyle = () => {
@@ -17,17 +18,13 @@ class Director extends Component {
             borderRadius: "25px",
             width: "130px",
             height: "40px",
-            fontSize: "20px",
+            fontSize: "18px",
             color: "navy",
             border: 'none',
         }
     }
 
     render() {
-        // console.log('Director Page')
-        // console.log(this.props.data)
-        // console.log(this.props)
-        const director = this.props.data
         return (
             <div>
                 <div className="navbar">
@@ -43,10 +40,11 @@ class Director extends Component {
                 </div>
 
                 <div className="all-directors">
-                    {director.map(name => (
+                    {this.props.directorData.map(name => (
                         <Directorname
                             name={name}
                             key={name.id}
+                            refresh={this.props.getAllData}
                         />
                     ))}
                 </div>
@@ -56,13 +54,13 @@ class Director extends Component {
 }
 
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
-        data: state.data
+        directorData: state.directorData
     };
 }
 const mapDispatchToProps = {
-    getData
+    getAllData
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Director);
+export default connect(mapStateToProps, mapDispatchToProps)(Directors);

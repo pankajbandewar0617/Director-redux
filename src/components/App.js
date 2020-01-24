@@ -1,25 +1,26 @@
 import React from 'react';
 import Home from './home'
-import Director from './Director';
+import Directors from './Director';
+import AddDirector from './addDirector';
+import DirectorEdit from './editDirector';
+import Directorname from './directorName';
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 
 
 class App extends React.Component {
+
   render() {
-    const { data } = this.props
-    console.log(data)
 
     return (
       <div>
-        {/* <Link to="/directors"> */}
-        {/* <button>Directors</button> */}
-        {/* </Link> */}
         <BrowserRouter>
           <Switch>
             <Route path="/" exact component={Home} />
-            {/* <Route path="/directors" component={<Director />} />
-             */}
-            <Director />
+            <Route path="/directors" exact component={Directors} />
+            <Route path="/directors/new" exact component={AddDirector} />
+            <Route path="/directors/:id" exact component={Directorname} />
+            <Route path="/directors/:id/edit" exact component={DirectorEdit} />
+            {/* <Route path="/directors/:id/delete" exact component={DirectorDelete} /> */}
           </Switch>
         </BrowserRouter>
       </div>
@@ -28,10 +29,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
-// componentDidMount() {
-  //   const { data } = this.props
-  //   console.log(data)
-  //   getData();
-  // }
