@@ -1,64 +1,21 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { getEditData } from './action';
 import './App.css'
 
 class DirectorEdit extends Component {
 
-    // state = {
-    //     director: ''
-    // };
-
-    // componentDidMount() {
-    //     const id = this.props.match.params.id;
-    //     this.getDirector(id)
-    // }
-
-    // getDirector(id) {
-    //     const getDirectorById = `http://localhost:9000/directors/${id}`;
-    //     fetch(getDirectorById, {
-    //         method: 'GET'
-    //     })
-    //         .then(data => data.json())
-    //         .then(name => this.setState({ director: name }));
-    // }
-
-    // takeInput = event => {
-    //     this.setState({
-    //         director: event.target.value
-    //     });
-    // };
-
-    // passValue = event => {
-    //     const id = this.props.match.params.id
-    //     event.preventDefault();
-    //     event.target.parentNode.children[1].value = ''
-    //     if (this.state.director) {
-    //         this.directorEdit(id, this.state)
-    //         this.setState({
-    //             director: ''
-    //         })
-    //     };
-    // }
-
-    // directorEdit = (id, data) => {
-    //     const url = `http://localhost:9000/directors/${id}/edit`;
-    //     fetch(url, {
-    //         method: 'PUT',
-    //         headers: {
-    //             Accept: "application/json",
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    //         .then(res => res.json())
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // };
+    passValue = e => {
+        e.preventDefault();
+        const id = this.props.match.params.id;
+        const name = e.target[0].value;
+        this.props.getEditData(id, name);
+        this.props.history.push('/directors');
+    };
 
     render() {
-        // const { name } = this.state.director
-        // const id = this.props.match.params.id
+        const id = this.props.match.params.id
         return (
             <div>
                 <Link to={`/directors`}>
@@ -66,17 +23,17 @@ class DirectorEdit extends Component {
                 </Link>
                 <div className="director-add">
                     <h3>Change Director Name</h3>
-                    <form >
+                    <form onSubmit={this.passValue}>
                         <div>
                             <b>Director : </b>
                             <input
                                 type="text"
-                                // defaultValue={name}
                                 placeholder="Enter Director Name..."
                                 onChange={this.takeInput}
                                 required
                             />
-                            <button >add</button></div>
+                            <button type="submit">add</button>
+                        </div>
                     </form>
                 </div>
             </div >
@@ -84,4 +41,15 @@ class DirectorEdit extends Component {
     }
 }
 
-export default DirectorEdit;
+
+const mapStateToProps = state => {
+    return {
+        directors: state.directors
+    };
+};
+
+const mapDispatchToProps = {
+    getEditData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DirectorEdit));

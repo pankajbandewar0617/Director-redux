@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Directorname from './directorName';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { getAllData } from './action';
-// import AddDirector from './addDirector';
 import './App.css';
 
 class Directors extends Component {
@@ -63,4 +62,4 @@ const mapDispatchToProps = {
     getAllData
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Directors);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Directors));

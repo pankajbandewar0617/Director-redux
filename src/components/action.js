@@ -17,9 +17,9 @@ export const addNewData = (name) => ({
     name
 });
 
-export const getEditData = (id) => ({
+export const getEditData = (id, name) => ({
     type: "EDIT_ONE",
-    id
+    id, name
 });
 
 

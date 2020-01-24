@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { addNewData } from './action';
-
 import './App.css';
 
 class AddDirector extends Component {

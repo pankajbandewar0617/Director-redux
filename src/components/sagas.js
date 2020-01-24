@@ -69,6 +69,7 @@ function* addDirector(data) {
         console.log(err);
     });
 
+    // yield console.log(json)
     yield put({ type: "ADD DATA", json })
 
 }
@@ -78,10 +79,37 @@ function* actionWatcher4() {
     yield takeLatest("ADD_ONE", addDirector)
 }
 
-// function* actionWatcher5() {
-//     console.log('edit director')
-//     yield takeLatest("EDIT_ONE", editData)
-// }
+function* editDirector(data) {
+    console.log(data)
+    const director = { director: data.name }
+    console.log(director)
+    console.log('edit director')
+    const url = `http://localhost:9000/directors/${data.id}/edit`
+    // console.log(url)
+    const json = yield fetch(url, {
+        method: 'PUT',
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(director)
+    }).then(res => {
+        return res.json()
+    }
+    ).catch(err => {
+        console.log(err);
+    });
+
+    // console.log(json)
+
+    yield put({ type: "EDIT DATA", json })
+
+}
+
+function* actionWatcher5() {
+    console.log('edit director')
+    yield takeLatest("EDIT_ONE", editDirector)
+}
 
 export default function* rootSaga() {
     // console.log(434)
@@ -90,6 +118,6 @@ export default function* rootSaga() {
         fork(actionWatcher2),
         fork(actionWatcher3),
         fork(actionWatcher4),
-
+        fork(actionWatcher5)
     ]);
 }
